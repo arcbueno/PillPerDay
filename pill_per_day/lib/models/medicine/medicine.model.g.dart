@@ -3,419 +3,483 @@
 part of 'medicine.model.dart';
 
 // **************************************************************************
-// _IsarCollectionGenerator
+// IsarCollectionGenerator
 // **************************************************************************
 
 // coverage:ignore-file
-// ignore_for_file: duplicate_ignore, invalid_use_of_protected_member, lines_longer_than_80_chars, constant_identifier_names, avoid_js_rounded_ints, no_leading_underscores_for_local_identifiers, require_trailing_commas, unnecessary_parenthesis, unnecessary_raw_strings, unnecessary_null_in_if_null_operators, library_private_types_in_public_api, prefer_const_constructors
-// ignore_for_file: type=lint
+// ignore_for_file: duplicate_ignore, non_constant_identifier_names, constant_identifier_names, invalid_use_of_protected_member, unnecessary_cast, prefer_const_constructors, lines_longer_than_80_chars, require_trailing_commas, inference_failure_on_function_invocation, unnecessary_parenthesis, unnecessary_raw_strings, unnecessary_null_checks, join_return_with_assignment, prefer_final_locals, avoid_js_rounded_ints, avoid_positional_boolean_parameters, always_specify_types
 
 extension GetMedicineModelCollection on Isar {
-  IsarCollection<int, MedicineModel> get medicineModels => this.collection();
+  IsarCollection<MedicineModel> get medicineModels => this.collection();
 }
 
-const MedicineModelSchema = IsarGeneratedSchema(
-  schema: IsarSchema(
-    name: 'MedicineModel',
-    idName: 'isarId',
-    embedded: false,
-    properties: [
-      IsarPropertySchema(
-        name: 'name',
-        type: IsarType.string,
-      ),
-      IsarPropertySchema(
-        name: 'frequencyHours',
-        type: IsarType.double,
-      ),
-      IsarPropertySchema(
-        name: 'limitDate',
-        type: IsarType.dateTime,
-      ),
-      IsarPropertySchema(
-        name: 'observations',
-        type: IsarType.string,
-      ),
-      IsarPropertySchema(
-        name: 'alarmActive',
-        type: IsarType.bool,
-      ),
-    ],
-    indexes: [],
-  ),
-  converter: IsarObjectConverter<int, MedicineModel>(
-    serialize: serializeMedicineModel,
-    deserialize: deserializeMedicineModel,
-    deserializeProperty: deserializeMedicineModelProp,
-  ),
-  embeddedSchemas: [],
+const MedicineModelSchema = CollectionSchema(
+  name: r'MedicineModel',
+  id: 2197460021641310300,
+  properties: {
+    r'alarmActive': PropertySchema(
+      id: 0,
+      name: r'alarmActive',
+      type: IsarType.bool,
+    ),
+    r'frequencyHours': PropertySchema(
+      id: 1,
+      name: r'frequencyHours',
+      type: IsarType.double,
+    ),
+    r'limitDate': PropertySchema(
+      id: 2,
+      name: r'limitDate',
+      type: IsarType.dateTime,
+    ),
+    r'name': PropertySchema(
+      id: 3,
+      name: r'name',
+      type: IsarType.string,
+    ),
+    r'observations': PropertySchema(
+      id: 4,
+      name: r'observations',
+      type: IsarType.string,
+    )
+  },
+  estimateSize: _medicineModelEstimateSize,
+  serialize: _medicineModelSerialize,
+  deserialize: _medicineModelDeserialize,
+  deserializeProp: _medicineModelDeserializeProp,
+  idName: r'id',
+  indexes: {},
+  links: {},
+  embeddedSchemas: {},
+  getId: _medicineModelGetId,
+  getLinks: _medicineModelGetLinks,
+  attach: _medicineModelAttach,
+  version: '3.1.8',
 );
 
-@isarProtected
-int serializeMedicineModel(IsarWriter writer, MedicineModel object) {
+int _medicineModelEstimateSize(
+  MedicineModel object,
+  List<int> offsets,
+  Map<Type, List<int>> allOffsets,
+) {
+  var bytesCount = offsets.last;
   {
     final value = object.name;
-    if (value == null) {
-      IsarCore.writeNull(writer, 1);
-    } else {
-      IsarCore.writeString(writer, 1, value);
+    if (value != null) {
+      bytesCount += 3 + value.length * 3;
     }
   }
-  IsarCore.writeDouble(writer, 2, object.frequencyHours ?? double.nan);
-  IsarCore.writeLong(writer, 3,
-      object.limitDate?.toUtc().microsecondsSinceEpoch ?? -9223372036854775808);
   {
     final value = object.observations;
-    if (value == null) {
-      IsarCore.writeNull(writer, 4);
-    } else {
-      IsarCore.writeString(writer, 4, value);
+    if (value != null) {
+      bytesCount += 3 + value.length * 3;
     }
   }
-  {
-    final value = object.alarmActive;
-    if (value == null) {
-      IsarCore.writeNull(writer, 5);
-    } else {
-      IsarCore.writeBool(writer, 5, value);
-    }
-  }
-  return object.isarId;
+  return bytesCount;
 }
 
-@isarProtected
-MedicineModel deserializeMedicineModel(IsarReader reader) {
+void _medicineModelSerialize(
+  MedicineModel object,
+  IsarWriter writer,
+  List<int> offsets,
+  Map<Type, List<int>> allOffsets,
+) {
+  writer.writeBool(offsets[0], object.alarmActive);
+  writer.writeDouble(offsets[1], object.frequencyHours);
+  writer.writeDateTime(offsets[2], object.limitDate);
+  writer.writeString(offsets[3], object.name);
+  writer.writeString(offsets[4], object.observations);
+}
+
+MedicineModel _medicineModelDeserialize(
+  Id id,
+  IsarReader reader,
+  List<int> offsets,
+  Map<Type, List<int>> allOffsets,
+) {
   final object = MedicineModel();
-  object.isarId = IsarCore.readId(reader);
-  object.name = IsarCore.readString(reader, 1);
-  {
-    final value = IsarCore.readDouble(reader, 2);
-    if (value.isNaN) {
-      object.frequencyHours = null;
-    } else {
-      object.frequencyHours = value;
-    }
-  }
-  {
-    final value = IsarCore.readLong(reader, 3);
-    if (value == -9223372036854775808) {
-      object.limitDate = null;
-    } else {
-      object.limitDate =
-          DateTime.fromMicrosecondsSinceEpoch(value, isUtc: true).toLocal();
-    }
-  }
-  object.observations = IsarCore.readString(reader, 4);
-  {
-    if (IsarCore.readNull(reader, 5)) {
-      object.alarmActive = null;
-    } else {
-      object.alarmActive = IsarCore.readBool(reader, 5);
-    }
-  }
+  object.alarmActive = reader.readBoolOrNull(offsets[0]);
+  object.frequencyHours = reader.readDoubleOrNull(offsets[1]);
+  object.id = id;
+  object.limitDate = reader.readDateTimeOrNull(offsets[2]);
+  object.name = reader.readStringOrNull(offsets[3]);
+  object.observations = reader.readStringOrNull(offsets[4]);
   return object;
 }
 
-@isarProtected
-dynamic deserializeMedicineModelProp(IsarReader reader, int property) {
-  switch (property) {
+P _medicineModelDeserializeProp<P>(
+  IsarReader reader,
+  int propertyId,
+  int offset,
+  Map<Type, List<int>> allOffsets,
+) {
+  switch (propertyId) {
     case 0:
-      return IsarCore.readId(reader);
+      return (reader.readBoolOrNull(offset)) as P;
     case 1:
-      return IsarCore.readString(reader, 1);
+      return (reader.readDoubleOrNull(offset)) as P;
     case 2:
-      {
-        final value = IsarCore.readDouble(reader, 2);
-        if (value.isNaN) {
-          return null;
-        } else {
-          return value;
-        }
-      }
+      return (reader.readDateTimeOrNull(offset)) as P;
     case 3:
-      {
-        final value = IsarCore.readLong(reader, 3);
-        if (value == -9223372036854775808) {
-          return null;
-        } else {
-          return DateTime.fromMicrosecondsSinceEpoch(value, isUtc: true)
-              .toLocal();
-        }
-      }
+      return (reader.readStringOrNull(offset)) as P;
     case 4:
-      return IsarCore.readString(reader, 4);
-    case 5:
-      {
-        if (IsarCore.readNull(reader, 5)) {
-          return null;
-        } else {
-          return IsarCore.readBool(reader, 5);
-        }
-      }
+      return (reader.readStringOrNull(offset)) as P;
     default:
-      throw ArgumentError('Unknown property: $property');
+      throw IsarError('Unknown property with id $propertyId');
   }
 }
 
-sealed class _MedicineModelUpdate {
-  bool call({
-    required int isarId,
-    String? name,
-    double? frequencyHours,
-    DateTime? limitDate,
-    String? observations,
-    bool? alarmActive,
-  });
+Id _medicineModelGetId(MedicineModel object) {
+  return object.id;
 }
 
-class _MedicineModelUpdateImpl implements _MedicineModelUpdate {
-  const _MedicineModelUpdateImpl(this.collection);
-
-  final IsarCollection<int, MedicineModel> collection;
-
-  @override
-  bool call({
-    required int isarId,
-    Object? name = ignore,
-    Object? frequencyHours = ignore,
-    Object? limitDate = ignore,
-    Object? observations = ignore,
-    Object? alarmActive = ignore,
-  }) {
-    return collection.updateProperties([
-          isarId
-        ], {
-          if (name != ignore) 1: name as String?,
-          if (frequencyHours != ignore) 2: frequencyHours as double?,
-          if (limitDate != ignore) 3: limitDate as DateTime?,
-          if (observations != ignore) 4: observations as String?,
-          if (alarmActive != ignore) 5: alarmActive as bool?,
-        }) >
-        0;
-  }
+List<IsarLinkBase<dynamic>> _medicineModelGetLinks(MedicineModel object) {
+  return [];
 }
 
-sealed class _MedicineModelUpdateAll {
-  int call({
-    required List<int> isarId,
-    String? name,
-    double? frequencyHours,
-    DateTime? limitDate,
-    String? observations,
-    bool? alarmActive,
-  });
+void _medicineModelAttach(
+    IsarCollection<dynamic> col, Id id, MedicineModel object) {
+  object.id = id;
 }
 
-class _MedicineModelUpdateAllImpl implements _MedicineModelUpdateAll {
-  const _MedicineModelUpdateAllImpl(this.collection);
-
-  final IsarCollection<int, MedicineModel> collection;
-
-  @override
-  int call({
-    required List<int> isarId,
-    Object? name = ignore,
-    Object? frequencyHours = ignore,
-    Object? limitDate = ignore,
-    Object? observations = ignore,
-    Object? alarmActive = ignore,
-  }) {
-    return collection.updateProperties(isarId, {
-      if (name != ignore) 1: name as String?,
-      if (frequencyHours != ignore) 2: frequencyHours as double?,
-      if (limitDate != ignore) 3: limitDate as DateTime?,
-      if (observations != ignore) 4: observations as String?,
-      if (alarmActive != ignore) 5: alarmActive as bool?,
+extension MedicineModelQueryWhereSort
+    on QueryBuilder<MedicineModel, MedicineModel, QWhere> {
+  QueryBuilder<MedicineModel, MedicineModel, QAfterWhere> anyId() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(const IdWhereClause.any());
     });
   }
 }
 
-extension MedicineModelUpdate on IsarCollection<int, MedicineModel> {
-  _MedicineModelUpdate get update => _MedicineModelUpdateImpl(this);
-
-  _MedicineModelUpdateAll get updateAll => _MedicineModelUpdateAllImpl(this);
-}
-
-sealed class _MedicineModelQueryUpdate {
-  int call({
-    String? name,
-    double? frequencyHours,
-    DateTime? limitDate,
-    String? observations,
-    bool? alarmActive,
-  });
-}
-
-class _MedicineModelQueryUpdateImpl implements _MedicineModelQueryUpdate {
-  const _MedicineModelQueryUpdateImpl(this.query, {this.limit});
-
-  final IsarQuery<MedicineModel> query;
-  final int? limit;
-
-  @override
-  int call({
-    Object? name = ignore,
-    Object? frequencyHours = ignore,
-    Object? limitDate = ignore,
-    Object? observations = ignore,
-    Object? alarmActive = ignore,
-  }) {
-    return query.updateProperties(limit: limit, {
-      if (name != ignore) 1: name as String?,
-      if (frequencyHours != ignore) 2: frequencyHours as double?,
-      if (limitDate != ignore) 3: limitDate as DateTime?,
-      if (observations != ignore) 4: observations as String?,
-      if (alarmActive != ignore) 5: alarmActive as bool?,
+extension MedicineModelQueryWhere
+    on QueryBuilder<MedicineModel, MedicineModel, QWhereClause> {
+  QueryBuilder<MedicineModel, MedicineModel, QAfterWhereClause> idEqualTo(
+      Id id) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(IdWhereClause.between(
+        lower: id,
+        upper: id,
+      ));
     });
   }
-}
 
-extension MedicineModelQueryUpdate on IsarQuery<MedicineModel> {
-  _MedicineModelQueryUpdate get updateFirst =>
-      _MedicineModelQueryUpdateImpl(this, limit: 1);
-
-  _MedicineModelQueryUpdate get updateAll =>
-      _MedicineModelQueryUpdateImpl(this);
-}
-
-class _MedicineModelQueryBuilderUpdateImpl
-    implements _MedicineModelQueryUpdate {
-  const _MedicineModelQueryBuilderUpdateImpl(this.query, {this.limit});
-
-  final QueryBuilder<MedicineModel, MedicineModel, QOperations> query;
-  final int? limit;
-
-  @override
-  int call({
-    Object? name = ignore,
-    Object? frequencyHours = ignore,
-    Object? limitDate = ignore,
-    Object? observations = ignore,
-    Object? alarmActive = ignore,
-  }) {
-    final q = query.build();
-    try {
-      return q.updateProperties(limit: limit, {
-        if (name != ignore) 1: name as String?,
-        if (frequencyHours != ignore) 2: frequencyHours as double?,
-        if (limitDate != ignore) 3: limitDate as DateTime?,
-        if (observations != ignore) 4: observations as String?,
-        if (alarmActive != ignore) 5: alarmActive as bool?,
-      });
-    } finally {
-      q.close();
-    }
+  QueryBuilder<MedicineModel, MedicineModel, QAfterWhereClause> idNotEqualTo(
+      Id id) {
+    return QueryBuilder.apply(this, (query) {
+      if (query.whereSort == Sort.asc) {
+        return query
+            .addWhereClause(
+              IdWhereClause.lessThan(upper: id, includeUpper: false),
+            )
+            .addWhereClause(
+              IdWhereClause.greaterThan(lower: id, includeLower: false),
+            );
+      } else {
+        return query
+            .addWhereClause(
+              IdWhereClause.greaterThan(lower: id, includeLower: false),
+            )
+            .addWhereClause(
+              IdWhereClause.lessThan(upper: id, includeUpper: false),
+            );
+      }
+    });
   }
-}
 
-extension MedicineModelQueryBuilderUpdate
-    on QueryBuilder<MedicineModel, MedicineModel, QOperations> {
-  _MedicineModelQueryUpdate get updateFirst =>
-      _MedicineModelQueryBuilderUpdateImpl(this, limit: 1);
+  QueryBuilder<MedicineModel, MedicineModel, QAfterWhereClause> idGreaterThan(
+      Id id,
+      {bool include = false}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(
+        IdWhereClause.greaterThan(lower: id, includeLower: include),
+      );
+    });
+  }
 
-  _MedicineModelQueryUpdate get updateAll =>
-      _MedicineModelQueryBuilderUpdateImpl(this);
+  QueryBuilder<MedicineModel, MedicineModel, QAfterWhereClause> idLessThan(
+      Id id,
+      {bool include = false}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(
+        IdWhereClause.lessThan(upper: id, includeUpper: include),
+      );
+    });
+  }
+
+  QueryBuilder<MedicineModel, MedicineModel, QAfterWhereClause> idBetween(
+    Id lowerId,
+    Id upperId, {
+    bool includeLower = true,
+    bool includeUpper = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(IdWhereClause.between(
+        lower: lowerId,
+        includeLower: includeLower,
+        upper: upperId,
+        includeUpper: includeUpper,
+      ));
+    });
+  }
 }
 
 extension MedicineModelQueryFilter
     on QueryBuilder<MedicineModel, MedicineModel, QFilterCondition> {
   QueryBuilder<MedicineModel, MedicineModel, QAfterFilterCondition>
-      isarIdEqualTo(
-    int value,
-  ) {
+      alarmActiveIsNull() {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(
-        EqualCondition(
-          property: 0,
-          value: value,
-        ),
-      );
+      return query.addFilterCondition(const FilterCondition.isNull(
+        property: r'alarmActive',
+      ));
     });
   }
 
   QueryBuilder<MedicineModel, MedicineModel, QAfterFilterCondition>
-      isarIdGreaterThan(
-    int value,
-  ) {
+      alarmActiveIsNotNull() {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(
-        GreaterCondition(
-          property: 0,
-          value: value,
-        ),
-      );
+      return query.addFilterCondition(const FilterCondition.isNotNull(
+        property: r'alarmActive',
+      ));
     });
   }
 
   QueryBuilder<MedicineModel, MedicineModel, QAfterFilterCondition>
-      isarIdGreaterThanOrEqualTo(
-    int value,
-  ) {
+      alarmActiveEqualTo(bool? value) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(
-        GreaterOrEqualCondition(
-          property: 0,
-          value: value,
-        ),
-      );
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'alarmActive',
+        value: value,
+      ));
     });
   }
 
   QueryBuilder<MedicineModel, MedicineModel, QAfterFilterCondition>
-      isarIdLessThan(
-    int value,
-  ) {
+      frequencyHoursIsNull() {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(
-        LessCondition(
-          property: 0,
-          value: value,
-        ),
-      );
+      return query.addFilterCondition(const FilterCondition.isNull(
+        property: r'frequencyHours',
+      ));
     });
   }
 
   QueryBuilder<MedicineModel, MedicineModel, QAfterFilterCondition>
-      isarIdLessThanOrEqualTo(
-    int value,
-  ) {
+      frequencyHoursIsNotNull() {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(
-        LessOrEqualCondition(
-          property: 0,
-          value: value,
-        ),
-      );
+      return query.addFilterCondition(const FilterCondition.isNotNull(
+        property: r'frequencyHours',
+      ));
     });
   }
 
   QueryBuilder<MedicineModel, MedicineModel, QAfterFilterCondition>
-      isarIdBetween(
-    int lower,
-    int upper,
-  ) {
+      frequencyHoursEqualTo(
+    double? value, {
+    double epsilon = Query.epsilon,
+  }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(
-        BetweenCondition(
-          property: 0,
-          lower: lower,
-          upper: upper,
-        ),
-      );
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'frequencyHours',
+        value: value,
+        epsilon: epsilon,
+      ));
+    });
+  }
+
+  QueryBuilder<MedicineModel, MedicineModel, QAfterFilterCondition>
+      frequencyHoursGreaterThan(
+    double? value, {
+    bool include = false,
+    double epsilon = Query.epsilon,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: r'frequencyHours',
+        value: value,
+        epsilon: epsilon,
+      ));
+    });
+  }
+
+  QueryBuilder<MedicineModel, MedicineModel, QAfterFilterCondition>
+      frequencyHoursLessThan(
+    double? value, {
+    bool include = false,
+    double epsilon = Query.epsilon,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: r'frequencyHours',
+        value: value,
+        epsilon: epsilon,
+      ));
+    });
+  }
+
+  QueryBuilder<MedicineModel, MedicineModel, QAfterFilterCondition>
+      frequencyHoursBetween(
+    double? lower,
+    double? upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+    double epsilon = Query.epsilon,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: r'frequencyHours',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
+        epsilon: epsilon,
+      ));
+    });
+  }
+
+  QueryBuilder<MedicineModel, MedicineModel, QAfterFilterCondition> idEqualTo(
+      Id value) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'id',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<MedicineModel, MedicineModel, QAfterFilterCondition>
+      idGreaterThan(
+    Id value, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: r'id',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<MedicineModel, MedicineModel, QAfterFilterCondition> idLessThan(
+    Id value, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: r'id',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<MedicineModel, MedicineModel, QAfterFilterCondition> idBetween(
+    Id lower,
+    Id upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: r'id',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
+      ));
+    });
+  }
+
+  QueryBuilder<MedicineModel, MedicineModel, QAfterFilterCondition>
+      limitDateIsNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNull(
+        property: r'limitDate',
+      ));
+    });
+  }
+
+  QueryBuilder<MedicineModel, MedicineModel, QAfterFilterCondition>
+      limitDateIsNotNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNotNull(
+        property: r'limitDate',
+      ));
+    });
+  }
+
+  QueryBuilder<MedicineModel, MedicineModel, QAfterFilterCondition>
+      limitDateEqualTo(DateTime? value) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'limitDate',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<MedicineModel, MedicineModel, QAfterFilterCondition>
+      limitDateGreaterThan(
+    DateTime? value, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: r'limitDate',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<MedicineModel, MedicineModel, QAfterFilterCondition>
+      limitDateLessThan(
+    DateTime? value, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: r'limitDate',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<MedicineModel, MedicineModel, QAfterFilterCondition>
+      limitDateBetween(
+    DateTime? lower,
+    DateTime? upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: r'limitDate',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
+      ));
     });
   }
 
   QueryBuilder<MedicineModel, MedicineModel, QAfterFilterCondition>
       nameIsNull() {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(const IsNullCondition(property: 1));
+      return query.addFilterCondition(const FilterCondition.isNull(
+        property: r'name',
+      ));
     });
   }
 
   QueryBuilder<MedicineModel, MedicineModel, QAfterFilterCondition>
       nameIsNotNull() {
-    return QueryBuilder.apply(not(), (query) {
-      return query.addFilterCondition(const IsNullCondition(property: 1));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNotNull(
+        property: r'name',
+      ));
     });
   }
 
@@ -424,94 +488,62 @@ extension MedicineModelQueryFilter
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(
-        EqualCondition(
-          property: 1,
-          value: value,
-          caseSensitive: caseSensitive,
-        ),
-      );
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'name',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
     });
   }
 
   QueryBuilder<MedicineModel, MedicineModel, QAfterFilterCondition>
       nameGreaterThan(
     String? value, {
+    bool include = false,
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(
-        GreaterCondition(
-          property: 1,
-          value: value,
-          caseSensitive: caseSensitive,
-        ),
-      );
-    });
-  }
-
-  QueryBuilder<MedicineModel, MedicineModel, QAfterFilterCondition>
-      nameGreaterThanOrEqualTo(
-    String? value, {
-    bool caseSensitive = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(
-        GreaterOrEqualCondition(
-          property: 1,
-          value: value,
-          caseSensitive: caseSensitive,
-        ),
-      );
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: r'name',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
     });
   }
 
   QueryBuilder<MedicineModel, MedicineModel, QAfterFilterCondition>
       nameLessThan(
     String? value, {
+    bool include = false,
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(
-        LessCondition(
-          property: 1,
-          value: value,
-          caseSensitive: caseSensitive,
-        ),
-      );
-    });
-  }
-
-  QueryBuilder<MedicineModel, MedicineModel, QAfterFilterCondition>
-      nameLessThanOrEqualTo(
-    String? value, {
-    bool caseSensitive = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(
-        LessOrEqualCondition(
-          property: 1,
-          value: value,
-          caseSensitive: caseSensitive,
-        ),
-      );
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: r'name',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
     });
   }
 
   QueryBuilder<MedicineModel, MedicineModel, QAfterFilterCondition> nameBetween(
     String? lower,
     String? upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(
-        BetweenCondition(
-          property: 1,
-          lower: lower,
-          upper: upper,
-          caseSensitive: caseSensitive,
-        ),
-      );
+      return query.addFilterCondition(FilterCondition.between(
+        property: r'name',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
+        caseSensitive: caseSensitive,
+      ));
     });
   }
 
@@ -521,13 +553,11 @@ extension MedicineModelQueryFilter
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(
-        StartsWithCondition(
-          property: 1,
-          value: value,
-          caseSensitive: caseSensitive,
-        ),
-      );
+      return query.addFilterCondition(FilterCondition.startsWith(
+        property: r'name',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
     });
   }
 
@@ -537,26 +567,22 @@ extension MedicineModelQueryFilter
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(
-        EndsWithCondition(
-          property: 1,
-          value: value,
-          caseSensitive: caseSensitive,
-        ),
-      );
+      return query.addFilterCondition(FilterCondition.endsWith(
+        property: r'name',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
     });
   }
 
   QueryBuilder<MedicineModel, MedicineModel, QAfterFilterCondition>
       nameContains(String value, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(
-        ContainsCondition(
-          property: 1,
-          value: value,
-          caseSensitive: caseSensitive,
-        ),
-      );
+      return query.addFilterCondition(FilterCondition.contains(
+        property: r'name',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
     });
   }
 
@@ -564,263 +590,49 @@ extension MedicineModelQueryFilter
       String pattern,
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(
-        MatchesCondition(
-          property: 1,
-          wildcard: pattern,
-          caseSensitive: caseSensitive,
-        ),
-      );
+      return query.addFilterCondition(FilterCondition.matches(
+        property: r'name',
+        wildcard: pattern,
+        caseSensitive: caseSensitive,
+      ));
     });
   }
 
   QueryBuilder<MedicineModel, MedicineModel, QAfterFilterCondition>
       nameIsEmpty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(
-        const EqualCondition(
-          property: 1,
-          value: '',
-        ),
-      );
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'name',
+        value: '',
+      ));
     });
   }
 
   QueryBuilder<MedicineModel, MedicineModel, QAfterFilterCondition>
       nameIsNotEmpty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(
-        const GreaterCondition(
-          property: 1,
-          value: '',
-        ),
-      );
-    });
-  }
-
-  QueryBuilder<MedicineModel, MedicineModel, QAfterFilterCondition>
-      frequencyHoursIsNull() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(const IsNullCondition(property: 2));
-    });
-  }
-
-  QueryBuilder<MedicineModel, MedicineModel, QAfterFilterCondition>
-      frequencyHoursIsNotNull() {
-    return QueryBuilder.apply(not(), (query) {
-      return query.addFilterCondition(const IsNullCondition(property: 2));
-    });
-  }
-
-  QueryBuilder<MedicineModel, MedicineModel, QAfterFilterCondition>
-      frequencyHoursEqualTo(
-    double? value, {
-    double epsilon = Filter.epsilon,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(
-        EqualCondition(
-          property: 2,
-          value: value,
-          epsilon: epsilon,
-        ),
-      );
-    });
-  }
-
-  QueryBuilder<MedicineModel, MedicineModel, QAfterFilterCondition>
-      frequencyHoursGreaterThan(
-    double? value, {
-    double epsilon = Filter.epsilon,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(
-        GreaterCondition(
-          property: 2,
-          value: value,
-          epsilon: epsilon,
-        ),
-      );
-    });
-  }
-
-  QueryBuilder<MedicineModel, MedicineModel, QAfterFilterCondition>
-      frequencyHoursGreaterThanOrEqualTo(
-    double? value, {
-    double epsilon = Filter.epsilon,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(
-        GreaterOrEqualCondition(
-          property: 2,
-          value: value,
-          epsilon: epsilon,
-        ),
-      );
-    });
-  }
-
-  QueryBuilder<MedicineModel, MedicineModel, QAfterFilterCondition>
-      frequencyHoursLessThan(
-    double? value, {
-    double epsilon = Filter.epsilon,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(
-        LessCondition(
-          property: 2,
-          value: value,
-          epsilon: epsilon,
-        ),
-      );
-    });
-  }
-
-  QueryBuilder<MedicineModel, MedicineModel, QAfterFilterCondition>
-      frequencyHoursLessThanOrEqualTo(
-    double? value, {
-    double epsilon = Filter.epsilon,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(
-        LessOrEqualCondition(
-          property: 2,
-          value: value,
-          epsilon: epsilon,
-        ),
-      );
-    });
-  }
-
-  QueryBuilder<MedicineModel, MedicineModel, QAfterFilterCondition>
-      frequencyHoursBetween(
-    double? lower,
-    double? upper, {
-    double epsilon = Filter.epsilon,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(
-        BetweenCondition(
-          property: 2,
-          lower: lower,
-          upper: upper,
-          epsilon: epsilon,
-        ),
-      );
-    });
-  }
-
-  QueryBuilder<MedicineModel, MedicineModel, QAfterFilterCondition>
-      limitDateIsNull() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(const IsNullCondition(property: 3));
-    });
-  }
-
-  QueryBuilder<MedicineModel, MedicineModel, QAfterFilterCondition>
-      limitDateIsNotNull() {
-    return QueryBuilder.apply(not(), (query) {
-      return query.addFilterCondition(const IsNullCondition(property: 3));
-    });
-  }
-
-  QueryBuilder<MedicineModel, MedicineModel, QAfterFilterCondition>
-      limitDateEqualTo(
-    DateTime? value,
-  ) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(
-        EqualCondition(
-          property: 3,
-          value: value,
-        ),
-      );
-    });
-  }
-
-  QueryBuilder<MedicineModel, MedicineModel, QAfterFilterCondition>
-      limitDateGreaterThan(
-    DateTime? value,
-  ) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(
-        GreaterCondition(
-          property: 3,
-          value: value,
-        ),
-      );
-    });
-  }
-
-  QueryBuilder<MedicineModel, MedicineModel, QAfterFilterCondition>
-      limitDateGreaterThanOrEqualTo(
-    DateTime? value,
-  ) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(
-        GreaterOrEqualCondition(
-          property: 3,
-          value: value,
-        ),
-      );
-    });
-  }
-
-  QueryBuilder<MedicineModel, MedicineModel, QAfterFilterCondition>
-      limitDateLessThan(
-    DateTime? value,
-  ) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(
-        LessCondition(
-          property: 3,
-          value: value,
-        ),
-      );
-    });
-  }
-
-  QueryBuilder<MedicineModel, MedicineModel, QAfterFilterCondition>
-      limitDateLessThanOrEqualTo(
-    DateTime? value,
-  ) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(
-        LessOrEqualCondition(
-          property: 3,
-          value: value,
-        ),
-      );
-    });
-  }
-
-  QueryBuilder<MedicineModel, MedicineModel, QAfterFilterCondition>
-      limitDateBetween(
-    DateTime? lower,
-    DateTime? upper,
-  ) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(
-        BetweenCondition(
-          property: 3,
-          lower: lower,
-          upper: upper,
-        ),
-      );
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        property: r'name',
+        value: '',
+      ));
     });
   }
 
   QueryBuilder<MedicineModel, MedicineModel, QAfterFilterCondition>
       observationsIsNull() {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(const IsNullCondition(property: 4));
+      return query.addFilterCondition(const FilterCondition.isNull(
+        property: r'observations',
+      ));
     });
   }
 
   QueryBuilder<MedicineModel, MedicineModel, QAfterFilterCondition>
       observationsIsNotNull() {
-    return QueryBuilder.apply(not(), (query) {
-      return query.addFilterCondition(const IsNullCondition(property: 4));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNotNull(
+        property: r'observations',
+      ));
     });
   }
 
@@ -830,77 +642,43 @@ extension MedicineModelQueryFilter
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(
-        EqualCondition(
-          property: 4,
-          value: value,
-          caseSensitive: caseSensitive,
-        ),
-      );
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'observations',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
     });
   }
 
   QueryBuilder<MedicineModel, MedicineModel, QAfterFilterCondition>
       observationsGreaterThan(
     String? value, {
+    bool include = false,
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(
-        GreaterCondition(
-          property: 4,
-          value: value,
-          caseSensitive: caseSensitive,
-        ),
-      );
-    });
-  }
-
-  QueryBuilder<MedicineModel, MedicineModel, QAfterFilterCondition>
-      observationsGreaterThanOrEqualTo(
-    String? value, {
-    bool caseSensitive = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(
-        GreaterOrEqualCondition(
-          property: 4,
-          value: value,
-          caseSensitive: caseSensitive,
-        ),
-      );
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: r'observations',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
     });
   }
 
   QueryBuilder<MedicineModel, MedicineModel, QAfterFilterCondition>
       observationsLessThan(
     String? value, {
+    bool include = false,
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(
-        LessCondition(
-          property: 4,
-          value: value,
-          caseSensitive: caseSensitive,
-        ),
-      );
-    });
-  }
-
-  QueryBuilder<MedicineModel, MedicineModel, QAfterFilterCondition>
-      observationsLessThanOrEqualTo(
-    String? value, {
-    bool caseSensitive = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(
-        LessOrEqualCondition(
-          property: 4,
-          value: value,
-          caseSensitive: caseSensitive,
-        ),
-      );
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: r'observations',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
     });
   }
 
@@ -908,17 +686,19 @@ extension MedicineModelQueryFilter
       observationsBetween(
     String? lower,
     String? upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(
-        BetweenCondition(
-          property: 4,
-          lower: lower,
-          upper: upper,
-          caseSensitive: caseSensitive,
-        ),
-      );
+      return query.addFilterCondition(FilterCondition.between(
+        property: r'observations',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
+        caseSensitive: caseSensitive,
+      ));
     });
   }
 
@@ -928,13 +708,11 @@ extension MedicineModelQueryFilter
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(
-        StartsWithCondition(
-          property: 4,
-          value: value,
-          caseSensitive: caseSensitive,
-        ),
-      );
+      return query.addFilterCondition(FilterCondition.startsWith(
+        property: r'observations',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
     });
   }
 
@@ -944,91 +722,53 @@ extension MedicineModelQueryFilter
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(
-        EndsWithCondition(
-          property: 4,
-          value: value,
-          caseSensitive: caseSensitive,
-        ),
-      );
+      return query.addFilterCondition(FilterCondition.endsWith(
+        property: r'observations',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
     });
   }
 
   QueryBuilder<MedicineModel, MedicineModel, QAfterFilterCondition>
       observationsContains(String value, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(
-        ContainsCondition(
-          property: 4,
-          value: value,
-          caseSensitive: caseSensitive,
-        ),
-      );
+      return query.addFilterCondition(FilterCondition.contains(
+        property: r'observations',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
     });
   }
 
   QueryBuilder<MedicineModel, MedicineModel, QAfterFilterCondition>
       observationsMatches(String pattern, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(
-        MatchesCondition(
-          property: 4,
-          wildcard: pattern,
-          caseSensitive: caseSensitive,
-        ),
-      );
+      return query.addFilterCondition(FilterCondition.matches(
+        property: r'observations',
+        wildcard: pattern,
+        caseSensitive: caseSensitive,
+      ));
     });
   }
 
   QueryBuilder<MedicineModel, MedicineModel, QAfterFilterCondition>
       observationsIsEmpty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(
-        const EqualCondition(
-          property: 4,
-          value: '',
-        ),
-      );
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'observations',
+        value: '',
+      ));
     });
   }
 
   QueryBuilder<MedicineModel, MedicineModel, QAfterFilterCondition>
       observationsIsNotEmpty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(
-        const GreaterCondition(
-          property: 4,
-          value: '',
-        ),
-      );
-    });
-  }
-
-  QueryBuilder<MedicineModel, MedicineModel, QAfterFilterCondition>
-      alarmActiveIsNull() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(const IsNullCondition(property: 5));
-    });
-  }
-
-  QueryBuilder<MedicineModel, MedicineModel, QAfterFilterCondition>
-      alarmActiveIsNotNull() {
-    return QueryBuilder.apply(not(), (query) {
-      return query.addFilterCondition(const IsNullCondition(property: 5));
-    });
-  }
-
-  QueryBuilder<MedicineModel, MedicineModel, QAfterFilterCondition>
-      alarmActiveEqualTo(
-    bool? value,
-  ) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(
-        EqualCondition(
-          property: 5,
-          value: value,
-        ),
-      );
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        property: r'observations',
+        value: '',
+      ));
     });
   }
 }
@@ -1036,346 +776,233 @@ extension MedicineModelQueryFilter
 extension MedicineModelQueryObject
     on QueryBuilder<MedicineModel, MedicineModel, QFilterCondition> {}
 
+extension MedicineModelQueryLinks
+    on QueryBuilder<MedicineModel, MedicineModel, QFilterCondition> {}
+
 extension MedicineModelQuerySortBy
     on QueryBuilder<MedicineModel, MedicineModel, QSortBy> {
-  QueryBuilder<MedicineModel, MedicineModel, QAfterSortBy> sortByIsarId() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(0);
-    });
-  }
-
-  QueryBuilder<MedicineModel, MedicineModel, QAfterSortBy> sortByIsarIdDesc() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(0, sort: Sort.desc);
-    });
-  }
-
-  QueryBuilder<MedicineModel, MedicineModel, QAfterSortBy> sortByName(
-      {bool caseSensitive = true}) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(
-        1,
-        caseSensitive: caseSensitive,
-      );
-    });
-  }
-
-  QueryBuilder<MedicineModel, MedicineModel, QAfterSortBy> sortByNameDesc(
-      {bool caseSensitive = true}) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(
-        1,
-        sort: Sort.desc,
-        caseSensitive: caseSensitive,
-      );
-    });
-  }
-
-  QueryBuilder<MedicineModel, MedicineModel, QAfterSortBy>
-      sortByFrequencyHours() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(2);
-    });
-  }
-
-  QueryBuilder<MedicineModel, MedicineModel, QAfterSortBy>
-      sortByFrequencyHoursDesc() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(2, sort: Sort.desc);
-    });
-  }
-
-  QueryBuilder<MedicineModel, MedicineModel, QAfterSortBy> sortByLimitDate() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(3);
-    });
-  }
-
-  QueryBuilder<MedicineModel, MedicineModel, QAfterSortBy>
-      sortByLimitDateDesc() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(3, sort: Sort.desc);
-    });
-  }
-
-  QueryBuilder<MedicineModel, MedicineModel, QAfterSortBy> sortByObservations(
-      {bool caseSensitive = true}) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(
-        4,
-        caseSensitive: caseSensitive,
-      );
-    });
-  }
-
-  QueryBuilder<MedicineModel, MedicineModel, QAfterSortBy>
-      sortByObservationsDesc({bool caseSensitive = true}) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(
-        4,
-        sort: Sort.desc,
-        caseSensitive: caseSensitive,
-      );
-    });
-  }
-
   QueryBuilder<MedicineModel, MedicineModel, QAfterSortBy> sortByAlarmActive() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(5);
+      return query.addSortBy(r'alarmActive', Sort.asc);
     });
   }
 
   QueryBuilder<MedicineModel, MedicineModel, QAfterSortBy>
       sortByAlarmActiveDesc() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(5, sort: Sort.desc);
+      return query.addSortBy(r'alarmActive', Sort.desc);
+    });
+  }
+
+  QueryBuilder<MedicineModel, MedicineModel, QAfterSortBy>
+      sortByFrequencyHours() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'frequencyHours', Sort.asc);
+    });
+  }
+
+  QueryBuilder<MedicineModel, MedicineModel, QAfterSortBy>
+      sortByFrequencyHoursDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'frequencyHours', Sort.desc);
+    });
+  }
+
+  QueryBuilder<MedicineModel, MedicineModel, QAfterSortBy> sortByLimitDate() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'limitDate', Sort.asc);
+    });
+  }
+
+  QueryBuilder<MedicineModel, MedicineModel, QAfterSortBy>
+      sortByLimitDateDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'limitDate', Sort.desc);
+    });
+  }
+
+  QueryBuilder<MedicineModel, MedicineModel, QAfterSortBy> sortByName() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'name', Sort.asc);
+    });
+  }
+
+  QueryBuilder<MedicineModel, MedicineModel, QAfterSortBy> sortByNameDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'name', Sort.desc);
+    });
+  }
+
+  QueryBuilder<MedicineModel, MedicineModel, QAfterSortBy>
+      sortByObservations() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'observations', Sort.asc);
+    });
+  }
+
+  QueryBuilder<MedicineModel, MedicineModel, QAfterSortBy>
+      sortByObservationsDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'observations', Sort.desc);
     });
   }
 }
 
 extension MedicineModelQuerySortThenBy
     on QueryBuilder<MedicineModel, MedicineModel, QSortThenBy> {
-  QueryBuilder<MedicineModel, MedicineModel, QAfterSortBy> thenByIsarId() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(0);
-    });
-  }
-
-  QueryBuilder<MedicineModel, MedicineModel, QAfterSortBy> thenByIsarIdDesc() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(0, sort: Sort.desc);
-    });
-  }
-
-  QueryBuilder<MedicineModel, MedicineModel, QAfterSortBy> thenByName(
-      {bool caseSensitive = true}) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(1, caseSensitive: caseSensitive);
-    });
-  }
-
-  QueryBuilder<MedicineModel, MedicineModel, QAfterSortBy> thenByNameDesc(
-      {bool caseSensitive = true}) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(1, sort: Sort.desc, caseSensitive: caseSensitive);
-    });
-  }
-
-  QueryBuilder<MedicineModel, MedicineModel, QAfterSortBy>
-      thenByFrequencyHours() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(2);
-    });
-  }
-
-  QueryBuilder<MedicineModel, MedicineModel, QAfterSortBy>
-      thenByFrequencyHoursDesc() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(2, sort: Sort.desc);
-    });
-  }
-
-  QueryBuilder<MedicineModel, MedicineModel, QAfterSortBy> thenByLimitDate() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(3);
-    });
-  }
-
-  QueryBuilder<MedicineModel, MedicineModel, QAfterSortBy>
-      thenByLimitDateDesc() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(3, sort: Sort.desc);
-    });
-  }
-
-  QueryBuilder<MedicineModel, MedicineModel, QAfterSortBy> thenByObservations(
-      {bool caseSensitive = true}) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(4, caseSensitive: caseSensitive);
-    });
-  }
-
-  QueryBuilder<MedicineModel, MedicineModel, QAfterSortBy>
-      thenByObservationsDesc({bool caseSensitive = true}) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(4, sort: Sort.desc, caseSensitive: caseSensitive);
-    });
-  }
-
   QueryBuilder<MedicineModel, MedicineModel, QAfterSortBy> thenByAlarmActive() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(5);
+      return query.addSortBy(r'alarmActive', Sort.asc);
     });
   }
 
   QueryBuilder<MedicineModel, MedicineModel, QAfterSortBy>
       thenByAlarmActiveDesc() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(5, sort: Sort.desc);
+      return query.addSortBy(r'alarmActive', Sort.desc);
+    });
+  }
+
+  QueryBuilder<MedicineModel, MedicineModel, QAfterSortBy>
+      thenByFrequencyHours() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'frequencyHours', Sort.asc);
+    });
+  }
+
+  QueryBuilder<MedicineModel, MedicineModel, QAfterSortBy>
+      thenByFrequencyHoursDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'frequencyHours', Sort.desc);
+    });
+  }
+
+  QueryBuilder<MedicineModel, MedicineModel, QAfterSortBy> thenById() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'id', Sort.asc);
+    });
+  }
+
+  QueryBuilder<MedicineModel, MedicineModel, QAfterSortBy> thenByIdDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'id', Sort.desc);
+    });
+  }
+
+  QueryBuilder<MedicineModel, MedicineModel, QAfterSortBy> thenByLimitDate() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'limitDate', Sort.asc);
+    });
+  }
+
+  QueryBuilder<MedicineModel, MedicineModel, QAfterSortBy>
+      thenByLimitDateDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'limitDate', Sort.desc);
+    });
+  }
+
+  QueryBuilder<MedicineModel, MedicineModel, QAfterSortBy> thenByName() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'name', Sort.asc);
+    });
+  }
+
+  QueryBuilder<MedicineModel, MedicineModel, QAfterSortBy> thenByNameDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'name', Sort.desc);
+    });
+  }
+
+  QueryBuilder<MedicineModel, MedicineModel, QAfterSortBy>
+      thenByObservations() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'observations', Sort.asc);
+    });
+  }
+
+  QueryBuilder<MedicineModel, MedicineModel, QAfterSortBy>
+      thenByObservationsDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'observations', Sort.desc);
     });
   }
 }
 
 extension MedicineModelQueryWhereDistinct
     on QueryBuilder<MedicineModel, MedicineModel, QDistinct> {
-  QueryBuilder<MedicineModel, MedicineModel, QAfterDistinct> distinctByName(
-      {bool caseSensitive = true}) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addDistinctBy(1, caseSensitive: caseSensitive);
-    });
-  }
-
-  QueryBuilder<MedicineModel, MedicineModel, QAfterDistinct>
-      distinctByFrequencyHours() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addDistinctBy(2);
-    });
-  }
-
-  QueryBuilder<MedicineModel, MedicineModel, QAfterDistinct>
-      distinctByLimitDate() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addDistinctBy(3);
-    });
-  }
-
-  QueryBuilder<MedicineModel, MedicineModel, QAfterDistinct>
-      distinctByObservations({bool caseSensitive = true}) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addDistinctBy(4, caseSensitive: caseSensitive);
-    });
-  }
-
-  QueryBuilder<MedicineModel, MedicineModel, QAfterDistinct>
+  QueryBuilder<MedicineModel, MedicineModel, QDistinct>
       distinctByAlarmActive() {
     return QueryBuilder.apply(this, (query) {
-      return query.addDistinctBy(5);
+      return query.addDistinctBy(r'alarmActive');
+    });
+  }
+
+  QueryBuilder<MedicineModel, MedicineModel, QDistinct>
+      distinctByFrequencyHours() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'frequencyHours');
+    });
+  }
+
+  QueryBuilder<MedicineModel, MedicineModel, QDistinct> distinctByLimitDate() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'limitDate');
+    });
+  }
+
+  QueryBuilder<MedicineModel, MedicineModel, QDistinct> distinctByName(
+      {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'name', caseSensitive: caseSensitive);
+    });
+  }
+
+  QueryBuilder<MedicineModel, MedicineModel, QDistinct> distinctByObservations(
+      {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'observations', caseSensitive: caseSensitive);
     });
   }
 }
 
-extension MedicineModelQueryProperty1
-    on QueryBuilder<MedicineModel, MedicineModel, QProperty> {
-  QueryBuilder<MedicineModel, int, QAfterProperty> isarIdProperty() {
+extension MedicineModelQueryProperty
+    on QueryBuilder<MedicineModel, MedicineModel, QQueryProperty> {
+  QueryBuilder<MedicineModel, int, QQueryOperations> idProperty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addProperty(0);
+      return query.addPropertyName(r'id');
     });
   }
 
-  QueryBuilder<MedicineModel, String?, QAfterProperty> nameProperty() {
+  QueryBuilder<MedicineModel, bool?, QQueryOperations> alarmActiveProperty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addProperty(1);
+      return query.addPropertyName(r'alarmActive');
     });
   }
 
-  QueryBuilder<MedicineModel, double?, QAfterProperty>
+  QueryBuilder<MedicineModel, double?, QQueryOperations>
       frequencyHoursProperty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addProperty(2);
+      return query.addPropertyName(r'frequencyHours');
     });
   }
 
-  QueryBuilder<MedicineModel, DateTime?, QAfterProperty> limitDateProperty() {
+  QueryBuilder<MedicineModel, DateTime?, QQueryOperations> limitDateProperty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addProperty(3);
+      return query.addPropertyName(r'limitDate');
     });
   }
 
-  QueryBuilder<MedicineModel, String?, QAfterProperty> observationsProperty() {
+  QueryBuilder<MedicineModel, String?, QQueryOperations> nameProperty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addProperty(4);
+      return query.addPropertyName(r'name');
     });
   }
 
-  QueryBuilder<MedicineModel, bool?, QAfterProperty> alarmActiveProperty() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addProperty(5);
-    });
-  }
-}
-
-extension MedicineModelQueryProperty2<R>
-    on QueryBuilder<MedicineModel, R, QAfterProperty> {
-  QueryBuilder<MedicineModel, (R, int), QAfterProperty> isarIdProperty() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addProperty(0);
-    });
-  }
-
-  QueryBuilder<MedicineModel, (R, String?), QAfterProperty> nameProperty() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addProperty(1);
-    });
-  }
-
-  QueryBuilder<MedicineModel, (R, double?), QAfterProperty>
-      frequencyHoursProperty() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addProperty(2);
-    });
-  }
-
-  QueryBuilder<MedicineModel, (R, DateTime?), QAfterProperty>
-      limitDateProperty() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addProperty(3);
-    });
-  }
-
-  QueryBuilder<MedicineModel, (R, String?), QAfterProperty>
+  QueryBuilder<MedicineModel, String?, QQueryOperations>
       observationsProperty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addProperty(4);
-    });
-  }
-
-  QueryBuilder<MedicineModel, (R, bool?), QAfterProperty>
-      alarmActiveProperty() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addProperty(5);
-    });
-  }
-}
-
-extension MedicineModelQueryProperty3<R1, R2>
-    on QueryBuilder<MedicineModel, (R1, R2), QAfterProperty> {
-  QueryBuilder<MedicineModel, (R1, R2, int), QOperations> isarIdProperty() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addProperty(0);
-    });
-  }
-
-  QueryBuilder<MedicineModel, (R1, R2, String?), QOperations> nameProperty() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addProperty(1);
-    });
-  }
-
-  QueryBuilder<MedicineModel, (R1, R2, double?), QOperations>
-      frequencyHoursProperty() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addProperty(2);
-    });
-  }
-
-  QueryBuilder<MedicineModel, (R1, R2, DateTime?), QOperations>
-      limitDateProperty() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addProperty(3);
-    });
-  }
-
-  QueryBuilder<MedicineModel, (R1, R2, String?), QOperations>
-      observationsProperty() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addProperty(4);
-    });
-  }
-
-  QueryBuilder<MedicineModel, (R1, R2, bool?), QOperations>
-      alarmActiveProperty() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addProperty(5);
+      return query.addPropertyName(r'observations');
     });
   }
 }

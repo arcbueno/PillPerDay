@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:pill_per_day/pages/home/home.page.dart';
 import 'package:pill_per_day/pages/home/home.viewmodel.dart';
 import 'package:pill_per_day/pages/initial/initial.page.dart';
+import 'package:pill_per_day/pages/new_medicine/new_medicine.page.dart';
+import 'package:pill_per_day/pages/new_medicine/new_medicine.viewmodel.dart';
 import 'package:pill_per_day/routes/route_names.dart';
 import 'package:provider/provider.dart';
 
@@ -12,6 +14,9 @@ class Routes {
           viewModel: HomeViewModel(
             context.read(),
           ),
+        ),
+    RouteNames.newMedicine.routeName: (BuildContext context) => NewMedicinePage(
+          viewModel: NewMedicineViewModel(context.read()),
         ),
   };
 }

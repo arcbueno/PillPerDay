@@ -4,8 +4,7 @@ part 'medicine.model.g.dart';
 
 @collection
 class MedicineModel {
-  @id
-  late int isarId;
+  Id id = Isar.autoIncrement;
   String? name;
   double? frequencyHours;
   DateTime? limitDate;

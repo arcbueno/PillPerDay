@@ -4,6 +4,7 @@ import 'package:pill_per_day/routes/routes.dart';
 import 'package:provider/provider.dart';
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
   getProviderList().then(
     (providers) => runApp(
       MultiProvider(

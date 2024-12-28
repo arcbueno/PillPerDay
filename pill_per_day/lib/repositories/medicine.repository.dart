@@ -9,16 +9,15 @@ class MedicineRepository {
 
   Future<void> addMedicine(Medicine medicine) async {
     final model = medicine.toModel();
-    await isar.writeAsync((isar) {
+    await isar.writeTxn(() async {
       isar.medicineModels.put(model);
     });
   }
 
   Future<List<Medicine>> getAllMedicines() async {
-    late final List<MedicineModel> models;
-    await isar.readAsync((isar) {
-      models = isar.medicineModels.where().findAll();
-    });
+    List<MedicineModel> models = [];
+    models = await isar.medicineModels.where().findAll();
+
     return models.map((model) => Medicine.fromModel(model)).toList();
   }
 }

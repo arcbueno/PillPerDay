@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:isar/isar.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:pill_per_day/models/medicine/medicine.model.dart';
 import 'package:pill_per_day/repositories/medicine.repository.dart';
 import 'package:provider/provider.dart';
@@ -17,21 +18,10 @@ Future<List<SingleChildWidget>> getProviderList() async {
 
 Future<Isar> _initIsar() async {
   Isar isar;
-  if (kIsWeb) {
-    // For web, make sure to initalize before
-    await Isar.initialize();
-
-    // Use sync methods
-    isar = Isar.open(
-      schemas: [MedicineModelSchema],
-      directory: Isar.sqliteInMemory,
-      engine: IsarEngine.sqlite,
-    );
-  } else {
-    isar = Isar.open(
-      schemas: [MedicineModelSchema],
-      directory: '/',
-    );
-  }
+  final appDocDirectory = await getApplicationDocumentsDirectory();
+  isar = await Isar.open(
+    [MedicineModelSchema],
+    directory: appDocDirectory.path,
+  );
   return isar;
 }

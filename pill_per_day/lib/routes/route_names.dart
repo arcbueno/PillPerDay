@@ -1,6 +1,7 @@
 enum RouteNames {
   initial('/'),
-  home('/home');
+  home('/home'),
+  newMedicine('/new');
 
   final String routeName;
   const RouteNames(this.routeName);

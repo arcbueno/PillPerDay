@@ -1,7 +1,8 @@
+import 'package:isar/isar.dart';
 import 'package:pill_per_day/models/medicine/medicine.model.dart';
 
 class Medicine {
-  final int? id;
+  final Id? id;
   final String name;
   final double frequencyHours;
   final DateTime limitDate;
@@ -19,7 +20,7 @@ class Medicine {
 
   factory Medicine.fromModel(MedicineModel model) {
     return Medicine(
-      id: model.isarId,
+      id: model.id,
       name: model.name!,
       frequencyHours: model.frequencyHours!,
       limitDate: model.limitDate!,
@@ -37,8 +38,26 @@ class Medicine {
       ..alarmActive = alarmActive;
 
     if (id != null) {
-      model.isarId = id!;
+      model.id = id!;
     }
     return model;
+  }
+
+  Medicine copyWith({
+    Id? id,
+    String? name,
+    double? frequencyHours,
+    DateTime? limitDate,
+    String? observations,
+    bool? alarmActive,
+  }) {
+    return Medicine(
+      id: id ?? this.id,
+      name: name ?? this.name,
+      frequencyHours: frequencyHours ?? this.frequencyHours,
+      limitDate: limitDate ?? this.limitDate,
+      observations: observations ?? this.observations,
+      alarmActive: alarmActive ?? this.alarmActive,
+    );
   }
 }
