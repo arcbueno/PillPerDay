@@ -61,7 +61,7 @@ class NewMedicinePage extends StatelessWidget {
           }
           if (state is NewMedicineStateSuccess) {
             WidgetsBinding.instance.addPostFrameCallback((_) {
-              Future.delayed(const Duration(seconds: 2), () {
+              Future.delayed(const Duration(seconds: 3), () {
                 if (context.mounted) {
                   Navigator.of(context).pop();
                 }
@@ -218,7 +218,6 @@ class NewMedicinePage extends StatelessWidget {
                           if (_formKey.currentState!.validate()) {
                             _formKey.currentState!.save();
                             viewModel.saveMedicine();
-                            Navigator.of(context).pop();
                           }
                         },
                         text: 'Salvar',

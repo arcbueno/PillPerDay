@@ -14,10 +14,25 @@ class MedicineRepository {
     });
   }
 
-  Future<List<Medicine>> getAllMedicines() async {
+  Future<List<Medicine>> getAllActiveMedicines() async {
     List<MedicineModel> models = [];
-    models = await isar.medicineModels.where().findAll();
+    models = await isar.medicineModels.filter().isActiveEqualTo(true).findAll();
 
     return models.map((model) => Medicine.fromModel(model)).toList();
+  }
+
+  Future<void> updateMedicine(Medicine medicine) async {
+    final model = medicine.toModel();
+    await isar.writeTxn(() async {
+      isar.medicineModels.put(model);
+    });
+  }
+
+  Future<void> deactivateMedicine(Medicine medicine) async {
+    final deactivated = medicine.copyWith(isActive: false);
+    final model = deactivated.toModel();
+    await isar.writeTxn(() async {
+      isar.medicineModels.put(model);
+    });
   }
 }

@@ -10,4 +10,5 @@ class MedicineModel {
   DateTime? limitDate;
   String? observations;
   bool? alarmActive;
+  bool? isActive;
 }

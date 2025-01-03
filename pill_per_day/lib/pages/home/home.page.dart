@@ -14,6 +14,24 @@ class HomePage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text('PillPerDay'),
+        actions: [
+          IconButton(
+            onPressed: () {
+              viewModel.getAllData();
+            },
+            icon: const Icon(
+              Icons.sync,
+            ),
+          ),
+          IconButton(
+            onPressed: () {
+              Navigator.of(context).pushNamed(RouteNames.history.routeName);
+            },
+            icon: const Icon(
+              Icons.history_rounded,
+            ),
+          ),
+        ],
       ),
       body: ValueListenableBuilder(
         valueListenable: viewModel.state,
@@ -27,7 +45,12 @@ class HomePage extends StatelessWidget {
               return EmptyList(onAdd: () => addMedicine(context));
             }
             return FilledList(
-                onAdd: () => addMedicine(context), medicines: state.medicines);
+              onAdd: () => addMedicine(context),
+              medicines: state.medicines,
+              isAlreadyTaken: viewModel.medicineAlreadyTaken,
+              onTap: (medicine) => viewModel.takeMedicine(medicine),
+              onDelete: (medicine) => viewModel.deleteMedicine(medicine),
+            );
           } else if (state is HomeStateError) {
             return Center(
               child: SelectableText(state.message),
@@ -42,9 +65,9 @@ class HomePage extends StatelessWidget {
     );
   }
 
-  void addMedicine(BuildContext context) {
-    Navigator.of(context).pushNamed(RouteNames.newMedicine.routeName).then(
-          (_) => viewModel.getAllMedicines(),
-        );
+  Future<void> addMedicine(BuildContext context) async {
+    await Navigator.of(context).pushNamed(RouteNames.newMedicine.routeName);
+    print('New medicine added');
+    await viewModel.getAllData();
   }
 }

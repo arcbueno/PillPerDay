@@ -1,20 +1,20 @@
 import 'package:pill_per_day/models/medicine/medicine.dart';
 import 'package:pill_per_day/models/medicine_registry.dart/medicine_registry.dart';
 
-sealed class HomeState {}
+sealed class HistoryState {}
 
-class HomeStateLoading extends HomeState {}
-
-class HomeStateError extends HomeState {
-  final String message;
-
-  HomeStateError(this.message);
-}
-
-class HomeStateLoaded extends HomeState {
+class HistoryStateLoaded extends HistoryState {
   final List<Medicine> medicines;
   final List<MedicineRegistry> medicineRegistries;
 
-  HomeStateLoaded(
+  HistoryStateLoaded(
       {this.medicines = const [], this.medicineRegistries = const []});
+}
+
+class HistoryStateLoading extends HistoryState {}
+
+class HistoryStateError extends HistoryState {
+  final String message;
+
+  HistoryStateError(this.message);
 }

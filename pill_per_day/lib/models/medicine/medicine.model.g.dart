@@ -27,18 +27,23 @@ const MedicineModelSchema = CollectionSchema(
       name: r'frequencyHours',
       type: IsarType.double,
     ),
-    r'limitDate': PropertySchema(
+    r'isActive': PropertySchema(
       id: 2,
+      name: r'isActive',
+      type: IsarType.bool,
+    ),
+    r'limitDate': PropertySchema(
+      id: 3,
       name: r'limitDate',
       type: IsarType.dateTime,
     ),
     r'name': PropertySchema(
-      id: 3,
+      id: 4,
       name: r'name',
       type: IsarType.string,
     ),
     r'observations': PropertySchema(
-      id: 4,
+      id: 5,
       name: r'observations',
       type: IsarType.string,
     )
@@ -86,9 +91,10 @@ void _medicineModelSerialize(
 ) {
   writer.writeBool(offsets[0], object.alarmActive);
   writer.writeDouble(offsets[1], object.frequencyHours);
-  writer.writeDateTime(offsets[2], object.limitDate);
-  writer.writeString(offsets[3], object.name);
-  writer.writeString(offsets[4], object.observations);
+  writer.writeBool(offsets[2], object.isActive);
+  writer.writeDateTime(offsets[3], object.limitDate);
+  writer.writeString(offsets[4], object.name);
+  writer.writeString(offsets[5], object.observations);
 }
 
 MedicineModel _medicineModelDeserialize(
@@ -101,9 +107,10 @@ MedicineModel _medicineModelDeserialize(
   object.alarmActive = reader.readBoolOrNull(offsets[0]);
   object.frequencyHours = reader.readDoubleOrNull(offsets[1]);
   object.id = id;
-  object.limitDate = reader.readDateTimeOrNull(offsets[2]);
-  object.name = reader.readStringOrNull(offsets[3]);
-  object.observations = reader.readStringOrNull(offsets[4]);
+  object.isActive = reader.readBoolOrNull(offsets[2]);
+  object.limitDate = reader.readDateTimeOrNull(offsets[3]);
+  object.name = reader.readStringOrNull(offsets[4]);
+  object.observations = reader.readStringOrNull(offsets[5]);
   return object;
 }
 
@@ -119,10 +126,12 @@ P _medicineModelDeserializeProp<P>(
     case 1:
       return (reader.readDoubleOrNull(offset)) as P;
     case 2:
-      return (reader.readDateTimeOrNull(offset)) as P;
+      return (reader.readBoolOrNull(offset)) as P;
     case 3:
-      return (reader.readStringOrNull(offset)) as P;
+      return (reader.readDateTimeOrNull(offset)) as P;
     case 4:
+      return (reader.readStringOrNull(offset)) as P;
+    case 5:
       return (reader.readStringOrNull(offset)) as P;
     default:
       throw IsarError('Unknown property with id $propertyId');
@@ -387,6 +396,34 @@ extension MedicineModelQueryFilter
         includeLower: includeLower,
         upper: upper,
         includeUpper: includeUpper,
+      ));
+    });
+  }
+
+  QueryBuilder<MedicineModel, MedicineModel, QAfterFilterCondition>
+      isActiveIsNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNull(
+        property: r'isActive',
+      ));
+    });
+  }
+
+  QueryBuilder<MedicineModel, MedicineModel, QAfterFilterCondition>
+      isActiveIsNotNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNotNull(
+        property: r'isActive',
+      ));
+    });
+  }
+
+  QueryBuilder<MedicineModel, MedicineModel, QAfterFilterCondition>
+      isActiveEqualTo(bool? value) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'isActive',
+        value: value,
       ));
     });
   }
@@ -808,6 +845,19 @@ extension MedicineModelQuerySortBy
     });
   }
 
+  QueryBuilder<MedicineModel, MedicineModel, QAfterSortBy> sortByIsActive() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'isActive', Sort.asc);
+    });
+  }
+
+  QueryBuilder<MedicineModel, MedicineModel, QAfterSortBy>
+      sortByIsActiveDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'isActive', Sort.desc);
+    });
+  }
+
   QueryBuilder<MedicineModel, MedicineModel, QAfterSortBy> sortByLimitDate() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'limitDate', Sort.asc);
@@ -889,6 +939,19 @@ extension MedicineModelQuerySortThenBy
     });
   }
 
+  QueryBuilder<MedicineModel, MedicineModel, QAfterSortBy> thenByIsActive() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'isActive', Sort.asc);
+    });
+  }
+
+  QueryBuilder<MedicineModel, MedicineModel, QAfterSortBy>
+      thenByIsActiveDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'isActive', Sort.desc);
+    });
+  }
+
   QueryBuilder<MedicineModel, MedicineModel, QAfterSortBy> thenByLimitDate() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'limitDate', Sort.asc);
@@ -945,6 +1008,12 @@ extension MedicineModelQueryWhereDistinct
     });
   }
 
+  QueryBuilder<MedicineModel, MedicineModel, QDistinct> distinctByIsActive() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'isActive');
+    });
+  }
+
   QueryBuilder<MedicineModel, MedicineModel, QDistinct> distinctByLimitDate() {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'limitDate');
@@ -984,6 +1053,12 @@ extension MedicineModelQueryProperty
       frequencyHoursProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'frequencyHours');
+    });
+  }
+
+  QueryBuilder<MedicineModel, bool?, QQueryOperations> isActiveProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'isActive');
     });
   }
 

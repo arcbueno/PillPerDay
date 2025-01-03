@@ -8,6 +8,7 @@ class Medicine {
   final DateTime limitDate;
   final String observations;
   final bool alarmActive;
+  final bool isActive;
 
   Medicine({
     this.id,
@@ -16,7 +17,20 @@ class Medicine {
     required this.limitDate,
     this.observations = '',
     this.alarmActive = false,
+    this.isActive = true,
   });
+
+  int get quantityOfPillsPerDay {
+    return (24 / frequencyHours).floor();
+  }
+
+  List<DateTime> get hoursForTake {
+    final List<DateTime> hours = [];
+    for (var i = 0; i < quantityOfPillsPerDay; i++) {
+      hours.add(limitDate.add(Duration(hours: (i * frequencyHours).toInt())));
+    }
+    return hours;
+  }
 
   factory Medicine.fromModel(MedicineModel model) {
     return Medicine(
@@ -26,6 +40,7 @@ class Medicine {
       limitDate: model.limitDate!,
       observations: model.observations!,
       alarmActive: model.alarmActive!,
+      isActive: model.isActive!,
     );
   }
 
@@ -35,7 +50,8 @@ class Medicine {
       ..frequencyHours = frequencyHours
       ..limitDate = limitDate
       ..observations = observations
-      ..alarmActive = alarmActive;
+      ..alarmActive = alarmActive
+      ..isActive = isActive;
 
     if (id != null) {
       model.id = id!;
@@ -50,6 +66,7 @@ class Medicine {
     DateTime? limitDate,
     String? observations,
     bool? alarmActive,
+    bool? isActive,
   }) {
     return Medicine(
       id: id ?? this.id,
@@ -58,6 +75,7 @@ class Medicine {
       limitDate: limitDate ?? this.limitDate,
       observations: observations ?? this.observations,
       alarmActive: alarmActive ?? this.alarmActive,
+      isActive: isActive ?? this.isActive,
     );
   }
 }
