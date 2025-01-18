@@ -40,7 +40,7 @@ class Medicine {
       limitDate: model.limitDate!,
       observations: model.observations!,
       alarmActive: model.alarmActive!,
-      isActive: model.isActive!,
+      isActive: model.isActive ?? true,
     );
   }
 

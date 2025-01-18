@@ -52,77 +52,83 @@ class HistoryPage extends StatelessWidget {
             }
             return Padding(
               padding: const EdgeInsets.all(16.0),
-              child: Column(
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text('Nome',
-                          style: Theme.of(context).textTheme.titleMedium),
-                      Text('Quando tomou',
-                          style: Theme.of(context).textTheme.titleMedium),
-                    ],
-                  ),
-                  const SizedBox(
-                    height: 12,
-                  ),
-                  ListView.builder(
-                    itemCount: state.medicineRegistries.length,
-                    shrinkWrap: true,
-                    itemBuilder: (context, index) {
-                      final medicineRegistry = state.medicineRegistries[index];
-                      final medicineList = state.medicines
-                          .where(
-                            (element) =>
-                                element.id == medicineRegistry.medicineId,
-                          )
-                          .toList();
-                      if (medicineList.isEmpty) {
-                        return const SizedBox.shrink();
-                      }
-                      final medicine = medicineList.first;
-                      return Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 8),
-                        child: DecoratedBox(
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(8),
-                            border: Border.all(
-                              color: Colors.grey,
+              child: SingleChildScrollView(
+                child: Column(
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text('Nome',
+                            style: Theme.of(context).textTheme.titleMedium),
+                        Text('Quando tomou',
+                            style: Theme.of(context).textTheme.titleMedium),
+                      ],
+                    ),
+                    const SizedBox(
+                      height: 12,
+                    ),
+                    ListView.builder(
+                      physics: const NeverScrollableScrollPhysics(),
+                      itemCount: state.medicineRegistries.length,
+                      shrinkWrap: true,
+                      itemBuilder: (context, index) {
+                        final medicineRegistry =
+                            state.medicineRegistries[index];
+                        final medicineList = state.medicines
+                            .where(
+                              (element) =>
+                                  element.id == medicineRegistry.medicineId,
+                            )
+                            .toList();
+                        if (medicineList.isEmpty) {
+                          return const SizedBox.shrink();
+                        }
+                        final medicine = medicineList.first;
+                        return Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 8),
+                          child: DecoratedBox(
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(8),
+                              border: Border.all(
+                                color: Colors.grey,
+                              ),
+                            ),
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text(
+                                    medicine.name,
+                                    style:
+                                        Theme.of(context).textTheme.titleLarge,
+                                  ),
+                                  Column(
+                                    children: [
+                                      Text(
+                                          DateFormat('dd/MM/yyyy')
+                                              .format(medicineRegistry.date),
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .titleLarge),
+                                      Text(
+                                          DateFormat('HH:mm')
+                                              .format(medicineRegistry.date),
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .titleLarge),
+                                    ],
+                                  ),
+                                ],
+                              ),
                             ),
                           ),
-                          child: Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Text(
-                                  medicine.name,
-                                  style: Theme.of(context).textTheme.titleLarge,
-                                ),
-                                Column(
-                                  children: [
-                                    Text(
-                                        DateFormat('dd/MM/yyyy')
-                                            .format(medicineRegistry.date),
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .titleLarge),
-                                    Text(
-                                        DateFormat('HH:mm')
-                                            .format(medicineRegistry.date),
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .titleLarge),
-                                  ],
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                      );
-                    },
-                  ),
-                ],
+                        );
+                      },
+                    ),
+                  ],
+                ),
               ),
             );
           } else if (state is HistoryStateError) {

@@ -23,7 +23,8 @@ class HomeViewModel {
     final state = this.state.value as HomeStateLoaded;
     final takenMedicinesToday = state.medicineRegistries
         .where((element) =>
-            element.medicineId == medicine.id && element.date.getDay() == today)
+            element.medicineId == medicine.id &&
+            element.date.getDay().isAtSameMomentAs(today))
         .toList();
     // Se não tiver tomado nenhum remédio, retorna false
     if (takenMedicinesToday.isEmpty) return false;

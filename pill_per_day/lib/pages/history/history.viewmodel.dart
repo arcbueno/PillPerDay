@@ -27,7 +27,7 @@ class HistoryViewModel {
 
   Future<List<Medicine>> _getAllMedicines() async {
     try {
-      final medicines = await _medicineRepository.getAllActiveMedicines();
+      final medicines = await _medicineRepository.getAllMedicines();
       return medicines;
     } catch (e) {
       state.value = HistoryStateError(e.toString());
